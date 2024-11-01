@@ -28,12 +28,12 @@ var rootCmd = &cobra.Command{
 
 		switch strings.ToLower(input) {
 		case "c", "client":
-			client.Run()
+			client.Run("")
 		case "s", "server":
-			server.Run()
+			server.Run("20000")
 		default:
 			fmt.Println("Defaulting to client.")
-			client.Run()
+			client.Run("")
 		}
 	},
 }

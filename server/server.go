@@ -12,18 +12,28 @@ import (
 var (
 	clients = make(map[net.Conn]bool) // Map to keep track of connected clients
 	mu      sync.Mutex                // Mutex for safe access to clients map
+	newPort string
+	err     error
 )
 
-func Run() {
-	// Asks user what port they want to listen to
-	reader := bufio.NewReader(os.Stdin)
-	fmt.Print("What port do you want to listen on? ")
-	port, err := reader.ReadString('\n')
-	if err != nil {
-		fmt.Println("Error:", err)
-		return
+func Run(port string) {
+
+	if port == "20000" {
+		// Asks user what port they want to listen to
+		reader := bufio.NewReader(os.Stdin)
+		fmt.Print("What port do you want to listen on? (Default is 20000): ")
+		newPort, err = reader.ReadString('\n')
+		if err != nil {
+			fmt.Println("Error:", err)
+			return
+		}
 	}
-	port = strings.TrimSpace(port)
+
+	if newPort != "" {
+		port = strings.TrimSpace(newPort)
+	} else {
+		port = strings.TrimSpace(port)
+	}
 
 	listener, err := net.Listen("tcp", ":"+port)
 	if err != nil {

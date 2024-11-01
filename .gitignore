@@ -1,0 +1,7 @@
+# Exclude any file named SimpleChat or main, with any extension
+SimpleChat
+main
+
+# Exclude any file named SimpleChat or main, specifically with extensions if needed
+SimpleChat.*
+main.*

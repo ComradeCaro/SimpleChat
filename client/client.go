@@ -8,17 +8,31 @@ import (
 	"strings"
 )
 
-func Run() {
-	// Asks user to enter address to server
-	reader := bufio.NewReader(os.Stdin)
-	fmt.Print("Enter server address (host:port): ")
-	address, err := reader.ReadString('\n')
-	if err != nil {
-		fmt.Println("Error:", err)
-		return
+var (
+	newAddress string
+	err        error
+	reader     *bufio.Reader // make sure to initialize this reader
+)
+
+func Run(address string) {
+	// Initialize reader to read from standard input
+	reader = bufio.NewReader(os.Stdin)
+
+	// Prompt for server address if none is provided
+	if address == "" {
+		fmt.Print("Enter server address (host:port): ")
+		newAddress, err = reader.ReadString('\n')
+		if err != nil {
+			fmt.Println("Error:", err)
+			return
+		}
 	}
 
-	address = strings.TrimSpace(address)
+	if newAddress != "" {
+		address = strings.TrimSpace(newAddress)
+	} else {
+		address = strings.TrimSpace(address)
+	}
 
 	fmt.Print("Please enter a name: ")
 	name, err := reader.ReadString('\n')
@@ -28,6 +42,7 @@ func Run() {
 	}
 	name = strings.TrimSpace(name)
 
+	// Connect to the server
 	conn, err := net.Dial("tcp", address)
 	if err != nil {
 		fmt.Println("Error connecting to server:", err)
@@ -65,9 +80,9 @@ func Run() {
 }
 
 func readMessages(conn net.Conn) {
-	reader := bufio.NewReader(conn)
+	connReader := bufio.NewReader(conn) // Use a reader specific for the connection
 	for {
-		message, err := reader.ReadString('\n')
+		message, err := connReader.ReadString('\n')
 		if err != nil {
 			if err.Error() == "EOF" {
 				fmt.Println("Disconnected from server.")
