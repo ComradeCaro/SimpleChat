@@ -74,6 +74,7 @@ func handleConnection(conn net.Conn, name string) {
 
 		// Broadcast that the client has left
 		broadcastMessage(fmt.Sprintf("Client %s has left the chat.", name), nil)
+		fmt.Printf("Client %v has left the chat.\n", name)
 	}()
 
 	fmt.Printf("Client %v connected on: %v\n", name, conn.RemoteAddr().String())
