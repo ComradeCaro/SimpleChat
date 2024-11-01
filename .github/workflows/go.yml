@@ -12,7 +12,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
-        go-version: [1.22.2]  # Specify the Go version you want to use
+        go-version: [1.22.2]
 
     steps:
       - name: Checkout code
@@ -27,13 +27,13 @@ jobs:
         run: go mod tidy
 
       - name: Build
-        run: go build -o SimpleChat
+        run: go build -o SimpleChat-${{ matrix.os }}  # Include OS in the executable name
 
       - name: Run tests
-        run: go test ./...  # Run all tests in the project
+        run: go test ./...
 
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
-          name: SimpleChat
-          path: SimpleChat  # Specify the output file or directory to be uploaded
+          name: SimpleChat-${{ matrix.os }}  # Unique artifact name for each OS
+          path: SimpleChat-${{ matrix.os }}  # Ensure this points to the correct executable
