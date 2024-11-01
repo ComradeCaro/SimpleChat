@@ -31,3 +31,9 @@ jobs:
 
       - name: Run tests
         run: go test ./...  # Run all tests in the project
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: SimpleChat
+          path: SimpleChat  # Specify the output file or directory to be uploaded
