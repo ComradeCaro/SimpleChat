@@ -11,7 +11,7 @@ var serverCmd = &cobra.Command{
 	Use:   "server",
 	Short: "Run the SimpleChat server",
 	Run: func(cmd *cobra.Command, args []string) {
-		server.Run(port)
+		server.Run(port, true)
 	},
 }
 

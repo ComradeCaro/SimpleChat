@@ -16,9 +16,9 @@ var (
 	err     error
 )
 
-func Run(port string) {
+func Run(port string, cliInput bool) {
 
-	if port == "20000" {
+	if cliInput != true {
 		// Asks user what port they want to listen to
 		reader := bufio.NewReader(os.Stdin)
 		fmt.Print("What port do you want to listen on? (Default is 20000): ")

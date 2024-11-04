@@ -30,7 +30,7 @@ var rootCmd = &cobra.Command{
 		case "c", "client":
 			client.Run("")
 		case "s", "server":
-			server.Run("20000")
+			server.Run("20000", false)
 		default:
 			fmt.Println("Defaulting to client.")
 			client.Run("")
